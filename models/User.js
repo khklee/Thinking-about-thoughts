@@ -41,6 +41,11 @@ UserSchema.virtual('friendCount').get(function() {
     return this.friends.length;
 });
 
+// delete associated thoughts and friends when a user is deleted
+UserSchema.pre('remove', function(next) {
+    this.model('Thought').remove({ username: this._id }, next);
+});
+
 //create the User model using the UserSchema
 const User = model('User', UserSchema);
 
