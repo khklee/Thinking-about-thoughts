@@ -16,8 +16,11 @@ const thoughtController = {
     // get one thought by id
     getThoughtById({ params }, res) {
         Thought.findOne({ _id: params.thoughtId })
+        .populate({
+            path: 'reactions', 
+            select: '-__v'
+        })
         .select('-__v')
-        .sort({ _id: -1 })
         .then(dbThoughtData => {
             // if no thought is found, send 404
             if (!dbThoughtData) {
@@ -37,11 +40,12 @@ const thoughtController = {
         Thought.create(body)
         .then((thoughtData) => {
             return User.findOneAndUpdate(
-                { _id: body.userId },
+                { username: body.username },
                 { $addToSet: { thoughts: thoughtData._id } },
                 { new: true }
             )
         })
+        .select('-__v')
         .then(dbUserData => {
             // if no user is found, send 404
             if (!dbUserData) {
@@ -59,6 +63,7 @@ const thoughtController = {
     // update thought by id
     updateThought({ params, body }, res) {
         Thought.findOneAndUpdate({ _id: params.thoughtId }, body, { new: true, runValidators: true })
+        .select('-__v')
         .then(dbThoughtData => {
             // if no thought is found, send 404
             if (!dbThoughtData) {
@@ -73,6 +78,7 @@ const thoughtController = {
     // delete thought by id
     deleteThought({ params }, res) {
         Thought.findOneAndDelete({ _id: params.thoughtId })
+        .select('-__v')
         .then(deletedThought => {
             // if no thought is found, send 404
             if (!deletedThought) {
@@ -101,6 +107,7 @@ const thoughtController = {
             { $push: { reactions: body } },
             { new: true, runValidators: true }
         )
+        .select('-__v')
         .then(dbThoughtData => {
             // if no thought is found, send 404
             if (!dbThoughtData) {
@@ -118,6 +125,7 @@ const thoughtController = {
             { $pull: { reactions: { reactionId: params.reactionId }}},
             { new: true }
         )
+        .select('-__v')
         .then(dbThoughtData => {
             // if no thought is found, send 404
             if (!dbThoughtData) {

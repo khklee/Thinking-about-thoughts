@@ -14,7 +14,7 @@
 <h2 id="installation">## Installation</h2>
     <p>Open a command-line application and enter 'npm start'.</p>
 <h2 id="test">## Test</h2>
-    <p>Please watch this walkthrough video: https://drive.google.com/file/d/19qkwJazQcf2TXuS3iTwAjqRIgYdJs85i/view.</p>
+    <p>Please watch this walkthrough video: https://drive.google.com/file/d/1GM-wV9KZ3r15ZYsd2GJsGax6_UnrNbWs/view.</p>
 <h2 id="license">## License</h2>
     <p>
       This application is covered under ISC and please <a href="https://choosealicense.com/licenses/">click here</a> to find out more details.
